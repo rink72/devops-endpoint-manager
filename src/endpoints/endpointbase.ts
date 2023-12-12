@@ -60,7 +60,7 @@ export abstract class EndpointBase implements IEndpoint
     protected createProjectReferences(projectId: string, existingEndpoint?: IAzDevServiceEndpoint): IAzDevServiceEndpointProjectReferences[]
     {
         const combinedReferences = [
-            ...(existingEndpoint?.serviceEndpointProjectReferences || []),
+            ...(existingEndpoint?.serviceEndpointProjectReferences ?? []),
             {
                 projectReference: {
                     id: projectId

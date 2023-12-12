@@ -50,7 +50,7 @@ export class SharedEndpoint extends EndpointBase
 
         const sourceEndpoint = await this.getSourceEndpoint(sourceProjectName, this._endpointConfiguration.name);
 
-        if (!sourceEndpoint || !sourceEndpoint.id)
+        if (!sourceEndpoint?.id)
         {
             throw new Error(`Unable to find <${this._endpointConfiguration.name}> endpoint in <${sourceProjectName}> project`);
         }
@@ -70,7 +70,7 @@ export class SharedEndpoint extends EndpointBase
 
         const updatedEndpoint = await this.getSourceEndpoint(sourceProjectName, this._endpointConfiguration.name);
 
-        if (!updatedEndpoint || !updatedEndpoint.id)
+        if (!updatedEndpoint?.id)
         {
             throw new Error(`Unable to find updated <${this._endpointConfiguration.name}> endpoint in <${sourceProjectName}> project`);
         }
@@ -82,7 +82,7 @@ export class SharedEndpoint extends EndpointBase
     {
         const sourceProject = await this._azdevClient.getProjectByName(sourceProjectName);
 
-        if (!sourceProject || !sourceProject.id)
+        if (!sourceProject?.id)
         {
             throw new Error(`Unable to find source project <${sourceProjectName}>`);
         }
