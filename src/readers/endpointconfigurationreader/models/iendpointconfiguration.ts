@@ -3,7 +3,6 @@ import { IEndpointCredentialConfiguration } from "./iendpointcredentialconfigura
 export enum EndpointType
 {
     "Azure" = "Azure",
-    "AzureOIDC" = "AzureOIDC",
     "SonarCloud" = "SonarCloud",
     "Snyk" = "Snyk",
     "Shared" = "Shared"
@@ -60,7 +59,6 @@ export interface ISonarCloudEndpointConfiguration extends IEndpointConfiguration
 {
     name: string
     type: EndpointType.SonarCloud
-    organization: string
     credential: IEndpointCredentialConfiguration
 }
 
