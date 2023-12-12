@@ -59,6 +59,28 @@ devend deploy [options]
 -e, --endpoints-configuration-path <path>: Specify the path to the endpoints configuration file. Alternatively, use DEVEND_ENDPOINTS_CONFIGURATION_PATH. Defaults to /endpoints.yml
 ```
 
+## Example Usages
+
+### Simplest Usage
+
+Run the orchestrator using just the Azure DevOps URL and token:
+
+```bash
+npx devend deploy --azure-devops-url "https://dev.azure.com/your_organization" --azure-devops-token "your_token"
+```
+
+### Usage with Azure Resources
+
+When using Azure KeyVaults, Service Principal Keys or configuring OIDC authentication, you will need to authenticate using `az login` before running DevEnd.
+
+```bash
+az login
+
+npx devend deploy --azure-devops-url "https://dev.azure.com/your_organization" --azure-devops-token "your_token"
+```
+
+These examples demonstrate the basic and more advanced usage scenarios for deploying service endpoints.
+
 ## Contributing
 
 Contributions to DevEnd are welcome. Please refer to the contributing guidelines for more information.
