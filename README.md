@@ -59,6 +59,8 @@ devend deploy [options]
 -e, --endpoints-configuration-path <path>: Specify the path to the endpoints configuration file. Alternatively, use DEVEND_ENDPOINTS_CONFIGURATION_PATH. Defaults to /endpoints.yml
 ```
 
+> Refer to [Runtime configuration guide](./docs/usage.md) for more details
+
 ## Example Usages
 
 ### Simplest Usage
