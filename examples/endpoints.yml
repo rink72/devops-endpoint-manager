@@ -12,7 +12,20 @@ endpoints:
     credential:
       type: OIDC
 
-sve-azure-credential
+  - name: azure-endpoint-key
+    type: Azure
+    tenantId: your-tenant-id
+    identity:
+      type: ServicePrincipal
+      clientId: your-client-id
+    scope:
+      type: Subscription
+      id: your-subscription-id
+      name: your-subscription-name
+    credential:
+      type: KeyVault
+      keyvault: your-keyvault-name
+      secretName: azure-secret
 
   - name: snyk-endpoint
     serverUrl: https://snyk.io/

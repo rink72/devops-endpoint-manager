@@ -79,7 +79,9 @@ az login
 npx devend deploy --azure-devops-url "https://dev.azure.com/your_organization" --azure-devops-token "your_token"
 ```
 
-These examples demonstrate the basic and more advanced usage scenarios for deploying service endpoints.
+## Configuration
+
+Please refer to the [Endpoints configuration guide](./docs/endpoints.md) and [Projects configuration guide](./docs/projects.md) for details on how to setup your configuration files.
 
 ## Contributing
 
