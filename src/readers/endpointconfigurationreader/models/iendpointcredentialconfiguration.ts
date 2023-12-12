@@ -15,7 +15,6 @@ export interface IEndpointEnvironmentVariableCredentialConfiguration
 export interface IEndpointOIDCCredentialConfiguration
 {
     type: EndpointCredentialType.OIDC
-    clientId: string
 }
 
 export interface IEndpointKeyVaultCredentialConfiguration
