@@ -18,10 +18,9 @@ const keyVaultCredentialSchema = yup.object({
     secretName: yup.string().required()
 }).noUnknown().strict();
 
-const keyCredentialSchema = yup.object({
-    type: yup.string().oneOf([EndpointCredentialType.Key]).required(),
-    clientId: yup.string().required(),
-    daysValid: yup.number().default(30).required()
+const spnKeyCredentialSchema = yup.object({
+    type: yup.string().oneOf([EndpointCredentialType.SpnKey]).required(),
+    daysValid: yup.number().default(30)
 }).noUnknown().strict();
 
 const credentialSchema = yup.lazy(value =>
@@ -39,8 +38,8 @@ const credentialSchema = yup.lazy(value =>
             return oidcCredentialSchema;
         case EndpointCredentialType.KeyVault:
             return keyVaultCredentialSchema;
-        case EndpointCredentialType.Key:
-            return keyCredentialSchema;
+        case EndpointCredentialType.SpnKey:
+            return spnKeyCredentialSchema;
         default:
             throw new Error(`Unknown <${value.type}> credential type`);
     }

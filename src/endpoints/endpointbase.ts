@@ -28,14 +28,14 @@ export abstract class EndpointBase implements IEndpoint
         this._validCredentialTypes = props.validCredentialTypes ?? [];
     }
 
-    protected abstract createEndpointObject(rotateCredential: boolean, projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>;
+    protected abstract createEndpointObject(projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>;
 
-    public async createEndpoint(rotateCredential: boolean, projectId: string): Promise<IAzDevServiceEndpoint>
+    public async createEndpoint(projectId: string): Promise<IAzDevServiceEndpoint>
     {
         this._logger.debug(`Creating endpoint <${this._endpointConfiguration.name}> (${this._endpointConfiguration.type})`);
 
         const existingEndpoint = await this.getExistingEndpoint(projectId);
-        const endpointObject = await this.createEndpointObject(rotateCredential, projectId, existingEndpoint);
+        const endpointObject = await this.createEndpointObject(projectId, existingEndpoint);
 
         if (existingEndpoint)
         {
@@ -83,7 +83,7 @@ export abstract class EndpointBase implements IEndpoint
     {
         if (!this._validCredentialTypes.includes(credential.type))
         {
-            throw new Error(`Invalid credential type <$credential.type}> for <${this._endpointConfiguration.name}> endpoint`);
+            throw new Error(`Invalid credential type <${credential.type}> for <${this._endpointConfiguration.name}> endpoint`);
         }
     }
 }

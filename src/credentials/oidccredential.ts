@@ -32,9 +32,7 @@ export class OidcCredential implements ICredential
         this._credentialConfiguration = props.credentialConfiguration
     }
 
-    // @ts-expect-error noUnusedParameters
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public async getCredential(rotate: boolean): Promise<string>
+    public async getCredential(): Promise<string>
     {
         this._logger.debug(`Method not implemented for credential type: ${this._credentialConfiguration.type}`)
 

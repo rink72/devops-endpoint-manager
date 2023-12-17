@@ -1,6 +1,6 @@
 import { Client } from "@microsoft/microsoft-graph-client";
 import { IAzureClient } from "./iazureclient";
-import { IAzureFederatedCredential, IAzureGraphRestResponse, IAzureServicePrincipal } from "./models/graph";
+import { IAzureApplicationPasswordCredential, IAzureFederatedCredential, IAzureGraphRestResponse, IAzureServicePrincipal } from "./models/graph";
 import { ILogger } from "../../logger/ilogger";
 
 export interface IAzureClientProps
@@ -31,6 +31,29 @@ export class AzureClient implements IAzureClient
             .post(federatedCredential)
 
         return createdCredential;
+    }
+
+    public async createServicePrincipalSecret(servicePrincipalId: string, secretName: string, endDateTime?: string): Promise<IAzureApplicationPasswordCredential>
+    {
+        this._logger.debug(`Creating new secret for ${servicePrincipalId} Service Principal`);
+
+        const requestUrl = `/applications/${servicePrincipalId}/addPassword`;
+
+        const passwordCredential: IAzureApplicationPasswordCredential = await this._graphClient.api(requestUrl)
+            .version("beta")
+            .post({
+                passwordCredential: {
+                    displayName: secretName,
+                    endDateTime: endDateTime
+                }
+            })
+
+        if (!passwordCredential?.secretText)
+        {
+            throw new Error(`Unable to create secret for ${servicePrincipalId} Service Principal`);
+        }
+
+        return passwordCredential;
     }
 
     public async getKeyVaultSecret(keyVaultName: string, secretName: string): Promise<string[]>
@@ -98,6 +121,32 @@ export class AzureClient implements IAzureClient
             .get()
 
         return federatedCredentials.value;
+    }
+
+    public async listServicePrincipalSecrets(servicePrincipalId: string): Promise<IAzureApplicationPasswordCredential[]>
+    {
+        this._logger.debug(`Requesting secrets for ${servicePrincipalId} service principal`);
+
+        const requestUrl = `/applications/${servicePrincipalId}/passwordCredentials`;
+
+        const passwordCredentials: IAzureGraphRestResponse<IAzureApplicationPasswordCredential> = await this._graphClient.api(requestUrl)
+            .version("beta")
+            .get()
+
+        return passwordCredentials.value;
+    }
+
+    public async removeServicePrincipalSecret(servicePrincipalId: string, keyId: string): Promise<void>
+    {
+        this._logger.debug(`Removing secret ${keyId} for ${servicePrincipalId} service principal`);
+
+        const requestUrl = `/applications/${servicePrincipalId}/removePassword`;
+
+        await this._graphClient.api(requestUrl)
+            .version("beta")
+            .post({
+                keyId: keyId
+            })
     }
 
     public async updateFederatedCredential(servicePrincipalId: string, federatedCredential: IAzureFederatedCredential): Promise<IAzureFederatedCredential>

@@ -146,7 +146,7 @@ describe('SonarCloud Endpoint Configuration Schema', () =>
             name: 'SonarCloudEndpoint',
             type: EndpointType.SonarCloud,
             credential: {
-                type: EndpointCredentialType.Key,
+                type: EndpointCredentialType.SpnKey,
                 clientId: 'client-id',
                 daysValid: 30
             }

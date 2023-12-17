@@ -23,13 +23,8 @@ export class SharedEndpoint extends EndpointBase
         });
     }
 
-    public async createEndpoint(rotateCredential: boolean, projectId: string): Promise<IAzDevServiceEndpoint>
+    public async createEndpoint(projectId: string): Promise<IAzDevServiceEndpoint>
     {
-        if (rotateCredential) 
-        {
-            this._logger.verbose(`Rotating credentials for <${this._endpointConfiguration.name}> (${this._endpointConfiguration.type}) endpoint is not supported`);
-        }
-
         const endpointConfiguration = this._endpointConfiguration as ISharedEndpointConfiguration;
 
         this._logger.debug(`Sharing <${endpointConfiguration.name}> endpoint from ${endpointConfiguration.sourceProject} project`);
@@ -39,7 +34,7 @@ export class SharedEndpoint extends EndpointBase
 
     // @ts-expect-error Unused endpoint for this endpoint type
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected async createEndpointObject(rotateCredential: boolean, projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>
+    protected async createEndpointObject(projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>
     {
         throw new Error("Method not implemented.");
     }
