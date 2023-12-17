@@ -85,6 +85,18 @@ export class AzureEndpoint extends EndpointBase
             });
         }
 
+        if (endpointConfiguration.credential.type === EndpointCredentialType.SpnKey)
+        {
+            this._logger.verbose(`Removing obsolete service principal password credentials for <${endpointConfiguration.name}> endpoint`);
+
+            const credential = this._credential as SpnKeyCredential;
+
+            await credential.removeObsoleteCredentials({
+                projectName: projectId,
+                servicePrincipalClientId: endpointConfiguration.identity.clientId
+            });
+        }
+
         return serviceEndpoint;
     }
 

@@ -58,7 +58,7 @@ export class AzureClient implements IAzureClient
 
     public async getKeyVaultSecret(keyVaultName: string, secretName: string): Promise<string[]>
     {
-        this._logger.debug(`Requesting secret ${secretName} from KeyVault ${keyVaultName}`);
+        this._logger.debug(`Requesting secret <${secretName}> from <${keyVaultName}> KeyVault`);
 
         const requestUrl = `/security/keyVaultSecrets/${keyVaultName}/${secretName}`;
 
@@ -89,7 +89,7 @@ export class AzureClient implements IAzureClient
 
     public async getFederatedCredential(appId: string, credentialName: string): Promise<IAzureFederatedCredential | null>
     {
-        this._logger.debug(`Requesting federated credential ${credentialName} for service principal ${appId}`);
+        this._logger.debug(`Requesting federated credential <${credentialName}> for <${appId}> service principal`);
 
         const servicePrincipal = await this.getServicePrincipalByAppId(appId);
 
@@ -112,7 +112,7 @@ export class AzureClient implements IAzureClient
 
     public async listServicePrincipalFederatedCredentials(id: string): Promise<IAzureFederatedCredential[]>
     {
-        this._logger.debug(`Requesting federated credentials for service principal id: ${id}`);
+        this._logger.debug(`Requesting federated credentials for <${id}> service principal`);
 
         const requestUrl = `/applications/${id}/federatedIdentityCredentials`;
 
@@ -125,7 +125,7 @@ export class AzureClient implements IAzureClient
 
     public async listServicePrincipalSecrets(servicePrincipalId: string): Promise<IAzureApplicationPasswordCredential[]>
     {
-        this._logger.debug(`Requesting secrets for ${servicePrincipalId} service principal`);
+        this._logger.debug(`Requesting secrets for <${servicePrincipalId}> service principal`);
 
         const requestUrl = `/applications/${servicePrincipalId}/passwordCredentials`;
 
@@ -138,7 +138,7 @@ export class AzureClient implements IAzureClient
 
     public async removeServicePrincipalSecret(servicePrincipalId: string, keyId: string): Promise<void>
     {
-        this._logger.debug(`Removing secret ${keyId} for ${servicePrincipalId} service principal`);
+        this._logger.debug(`Removing secret <${keyId}> for <${servicePrincipalId}> service principal`);
 
         const requestUrl = `/applications/${servicePrincipalId}/removePassword`;
 
@@ -151,7 +151,7 @@ export class AzureClient implements IAzureClient
 
     public async updateFederatedCredential(servicePrincipalId: string, federatedCredential: IAzureFederatedCredential): Promise<IAzureFederatedCredential>
     {
-        this._logger.debug(`Updating federated credential ${federatedCredential.name} for ${servicePrincipalId} service principal`);
+        this._logger.debug(`Updating federated credential <${federatedCredential.name}> for <${servicePrincipalId}> service principal`);
 
         const requestUrl = `/applications/${servicePrincipalId}/federatedIdentityCredentials/${federatedCredential.id}`;
 

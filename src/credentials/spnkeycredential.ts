@@ -21,7 +21,6 @@ export interface IRemoveSpnCredentialProps
 {
     projectName: string
     servicePrincipalClientId: string
-    newPasswordDisplayName: string
 }
 
 export class SpnKeyCredential implements ICredential
@@ -46,7 +45,7 @@ export class SpnKeyCredential implements ICredential
 
     public async createSpnCredential(props: ICreateSpnCredentialProps): Promise<IAzureApplicationPasswordCredential>
     {
-        this._logger.verbose(`Creating new secret for ${props.servicePrincipalClientId} Service Principal`);
+        this._logger.verbose(`Creating new secret for <${props.servicePrincipalClientId}> Service Principal`);
 
         const passwordNamePrefix = `devend-${props.projectName}-`
         const passwordName = `${passwordNamePrefix}${new Date().toISOString()}`
@@ -61,19 +60,19 @@ export class SpnKeyCredential implements ICredential
 
     public async removeObsoleteCredentials(props: IRemoveSpnCredentialProps): Promise<void>
     {
-        this._logger.verbose(`Removing obsolete secrets for ${props.servicePrincipalClientId} Service Principal`);
+        this._logger.verbose(`Removing obsolete secrets for <${props.servicePrincipalClientId}> Service Principal`);
 
         const passwordNamePrefix = `devend-${props.projectName}-`
 
         const servicePrincipal = await this.getServicePrincipal(props.servicePrincipalClientId)
 
-        const obsoleteCredentialsList = (await this._azureClient.listServicePrincipalSecrets(props.servicePrincipalClientId))
+        const obsoleteCredentialsList = (await this._azureClient.listServicePrincipalSecrets(servicePrincipal.id))
             .filter(credential => credential.displayName.startsWith(passwordNamePrefix))
-            .filter(credential => credential.displayName !== props.newPasswordDisplayName)
+            .filter(credential => credential.endDateTime && new Date(credential.endDateTime) < new Date())
 
         for (const obsoleteCredential of obsoleteCredentialsList)
         {
-            this._logger.debug(`Removing existing secret ${obsoleteCredential.displayName} for ${props.servicePrincipalClientId} Service Principal`);
+            this._logger.debug(`Removing existing <${obsoleteCredential.displayName}> secret for ${props.servicePrincipalClientId} Service Principal`);
 
             await this._azureClient.removeServicePrincipalSecret(servicePrincipal.id, obsoleteCredential.keyId)
         }
