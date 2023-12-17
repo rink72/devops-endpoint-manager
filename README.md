@@ -40,9 +40,11 @@ DevEnd supports various credential sources, providing flexibility for different 
   - Provides secure authentication using OIDC
 
 - **Service Principal Key**:
-  - Planned implementation for Azure RM endpoints
+
+  - Exclusive to Azure RM endpoints
   - Enables authentication using Azure service principal keys
   - Supports rotation of credentials
+  - Automatically removes expired credentials created by DevEnd
 
 These credential sources enhance security and ease of configuration across various environments.
 

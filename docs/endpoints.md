@@ -5,7 +5,7 @@
 ### Azure Endpoint
 
 ```yaml
-- name: azure-endpoint-oidc
+- name: azure-endpoint
   type: Azure
   tenantId: your-tenant-id
   identity:
@@ -54,6 +54,25 @@
 ```yaml
 credential:
   type: OIDC
+```
+
+### SpnKey credential
+
+> **Note:** This credential type is only supported for Azure endpoints.
+
+#### Create service principal secret with default expiration of 30 days
+
+```yaml
+credential:
+  type: SpnKey
+```
+
+#### Create service principal secret with custom expiration
+
+```yaml
+credential:
+  type: SpnKey
+  daysValid: 7
 ```
 
 ### KeyVault credential source
