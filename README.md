@@ -34,7 +34,7 @@ DevEnd supports various credential sources, providing flexibility for different 
   - Applicable to all endpoint types
   - Utilize environment variables for credentials, enabling easy integration with CI/CD pipelines
 
-- **OIDC (OpenID Connect)**:
+- **Workload Federation/OIDC (OpenID Connect)**:
 
   - Exclusive to Azure RM endpoints
   - Provides secure authentication using OIDC
