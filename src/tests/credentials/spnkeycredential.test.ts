@@ -1,7 +1,7 @@
 import { IAzureApplicationPasswordCredential, IAzureServicePrincipal } from "../../clients/azureclient/models/graph";
 import { ICreateSpnCredentialProps, IRemoveSpnCredentialProps, SpnKeyCredential } from "../../credentials/spnkeycredential";
 import { azureClientMock } from "../_mocks/azureClientMock";
-import { spnCredentialConfigurationMock } from "../_mocks/credentialConfigurationMock";
+import { spnCredentialConfigurationMock } from "../_mocks/configurationMocks";
 import { loggerMock } from "../_mocks/mocks";
 
 
