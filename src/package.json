@@ -1,7 +1,7 @@
 {
     "name": "devend",
     "displayName": "Azure DevOps Service Endpoint Manager",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "A tool to manage Azure DevOps Service Endpoints",
     "author": "Sam Beardman",
     "license": "LGPL-3.0-or-later",
