@@ -1,6 +1,6 @@
 import { AzDevClient } from '../../../clients/azdevclient/azdevclient';
 import { IAzDevServiceEndpointProjectReferences } from '../../../clients/azdevclient/models/iazdevserviceendpoint';
-import { loggerMock, WebApiMock, getProjectsMock, updateServiceEndpointtMock, deleteServiceEndpointMock } from '../../mocks';
+import { loggerMock, WebApiMock, getProjectsMock, updateServiceEndpointtMock, deleteServiceEndpointMock } from '../../_mocks/mocks';
 
 jest.mock('azure-devops-node-api');
 

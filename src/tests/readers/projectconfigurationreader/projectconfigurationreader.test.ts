@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
-import { appConfigMock, loggerMock } from '../../mocks';
-import { projectsFileDataMock } from '../../data';
+import { appConfigMock, loggerMock } from '../../_mocks/mocks';
+import { projectsFileDataMock } from '../../_mocks/data';
 import { ProjectConfigurationReader } from '../../../readers/projectconfigurationreader/projectconfigurationreader';
 import { IReaderProps } from '../../../readers/factories/readerfactory';
 
