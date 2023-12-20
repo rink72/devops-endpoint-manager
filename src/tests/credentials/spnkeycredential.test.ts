@@ -21,9 +21,9 @@ describe('SpnKeyCredential', () =>
     const credentialOneMock: IAzureApplicationPasswordCredential = {
         customKeyIdentifier: 'test-key-id',
         keyId: 'test-key-id',
-        displayName: 'test-display-name',
+        displayName: 'devend-TestProject-credential-one',
         hint: 'test-hint',
-        endDateTime: 'test-end-date',
+        endDateTime: '2999-12-01',
         secretText: 'test-secret-text',
         startDateTime: 'test-start-date',
     }
@@ -31,9 +31,9 @@ describe('SpnKeyCredential', () =>
     const crendentialTwoMock: IAzureApplicationPasswordCredential = {
         customKeyIdentifier: 'test-two-key-id',
         keyId: 'test-two-key-id',
-        displayName: 'test-two-display-name',
+        displayName: 'devend-TestProject-credential-two',
         hint: 'test-two-hint',
-        endDateTime: 'test-two-end-date',
+        endDateTime: '2000-12-01',
         secretText: 'test-two-secret-text',
         startDateTime: 'test-two-start-date'
     }
@@ -100,6 +100,6 @@ describe('SpnKeyCredential', () =>
         await spnKeyCredential.removeObsoleteCredentials(removeProps);
 
         expect(azureClientMock.listServicePrincipalSecrets).toHaveBeenCalled();
-        expect(azureClientMock.removeServicePrincipalSecret).toHaveBeenCalled();
+        expect(azureClientMock.removeServicePrincipalSecret).toHaveBeenCalledTimes(1);
     });
 });
