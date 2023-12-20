@@ -32,11 +32,11 @@ export class SonarCloudEndpoint extends EndpointBase
         this.validateCredentialType(props.endpointConfiguration.credential);
     }
 
-    protected async createEndpointObject(rotateCredential: boolean, projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>
+    protected async createEndpointObject(projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>
     {
         this._logger.debug(`Creating endpoint <${this._endpointConfiguration.name}> (${this._endpointConfiguration.type}) configuration object`);
 
-        const credential = await this._credential.getCredential(rotateCredential);
+        const credential = await this._credential.getCredential();
         const projectReferences = this.createProjectReferences(projectId, existingEndpoint);
 
         const serviceEndpoint: IAzDevServiceEndpoint = {

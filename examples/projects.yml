@@ -2,11 +2,12 @@ projects:
   - name: Project1
     removeObsoleteEndpoints: true
     endpoints:
-      - name: azurerm-endpoint
+      - name: azure-endpoint-oidc
       - name: snyk-endpoint
 
   - name: Project2
     removeObsoleteEndpoints: false
     endpoints:
+      - name: azure-endpoint-spnkey
       - name: sonarcloud-endpoint
       - name: shared-endpoint

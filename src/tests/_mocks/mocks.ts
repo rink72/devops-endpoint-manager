@@ -1,7 +1,7 @@
 import { TeamProjectReference } from "azure-devops-node-api/interfaces/CoreInterfaces";
-import { IAppConfig } from "../appconfig/iappconfig";
-import { ILogger } from "../logger/ilogger";
-import { IAzDevServiceEndpoint } from "../clients/azdevclient/models/iazdevserviceendpoint";
+import { IAppConfig } from "../../appconfig/iappconfig";
+import { ILogger } from "../../logger/ilogger";
+import { IAzDevServiceEndpoint } from "../../clients/azdevclient/models/iazdevserviceendpoint";
 
 export const loggerMock: ILogger = {
     debug: jest.fn(),
@@ -88,13 +88,3 @@ export const WebApiMock = jest.fn().mockImplementation(() => ({
         })
     }
 }));
-
-export const graphApiMock = jest.fn().mockImplementation(() => ({
-    version: jest.fn().mockReturnThis(),
-    get: jest.fn().mockReturnThis(),
-    update: jest.fn().mockReturnThis()
-}));
-
-export const graphClientMock = {
-    api: graphApiMock,
-};

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { IKeyVaultClient } from '../../../clients/keyvaultclient/ikeyvaultclient';
-import { loggerMock } from '../../mocks';
+import { loggerMock } from '../../_mocks/mocks';
 import { KeyVaultClient } from '../../../clients/keyvaultclient/keyvaultclient';
 
 jest.mock('@azure/keyvault-secrets');

@@ -8,6 +8,7 @@ import { IAzDevClient } from "../clients/azdevclient/iazdevclient";
 import { EndpointBase } from "./endpointbase";
 import { IAzureClient } from "../clients/azureclient/iazureclient";
 import { OidcCredential } from "../credentials/oidccredential";
+import { SpnKeyCredential } from "../credentials/spnkeycredential";
 
 export interface IAzureEndpointProps
 {
@@ -31,7 +32,8 @@ export class AzureEndpoint extends EndpointBase
             validCredentialTypes: [
                 EndpointCredentialType.EnvironmentVariable,
                 EndpointCredentialType.KeyVault,
-                EndpointCredentialType.OIDC
+                EndpointCredentialType.OIDC,
+                EndpointCredentialType.SpnKey
             ]
         });
 
@@ -40,13 +42,13 @@ export class AzureEndpoint extends EndpointBase
         this.validateCredentialType(props.endpointConfiguration.credential);
     }
 
-    public async createEndpoint(rotateCredential: boolean, projectId: string): Promise<IAzDevServiceEndpoint>
+    public async createEndpoint(projectId: string): Promise<IAzDevServiceEndpoint>
     {
         this._logger.debug(`Creating endpoint <${this._endpointConfiguration.name}> (${this._endpointConfiguration.type})`);
 
         const endpointConfiguration = this._endpointConfiguration as IAzureEndpointConfiguration;
         const existingEndpoint = await this.getExistingEndpoint(projectId);
-        const endpointObject = await this.createEndpointObject(rotateCredential, projectId, existingEndpoint);
+        const endpointObject = await this.createEndpointObject(projectId, existingEndpoint);
 
         let serviceEndpoint: IAzDevServiceEndpoint;
 
@@ -83,24 +85,52 @@ export class AzureEndpoint extends EndpointBase
             });
         }
 
+        if (endpointConfiguration.credential.type === EndpointCredentialType.SpnKey)
+        {
+            this._logger.verbose(`Removing obsolete service principal password credentials for <${endpointConfiguration.name}> endpoint`);
+
+            const credential = this._credential as SpnKeyCredential;
+
+            await credential.removeObsoleteCredentials({
+                projectName: projectId,
+                servicePrincipalClientId: endpointConfiguration.identity.clientId
+            });
+        }
+
         return serviceEndpoint;
     }
 
-    protected async createEndpointObject(rotateCredential: boolean, projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>
+    protected async createEndpointObject(projectId: string, existingEndpoint?: IAzDevServiceEndpoint): Promise<IAzDevServiceEndpoint>
     {
         this._logger.debug(`Creating endpoint <${this._endpointConfiguration.name}> (${this._endpointConfiguration.type}) configuration object`);
 
         const endpointConfiguration = this._endpointConfiguration as IAzureEndpointConfiguration;
         const projectReferences = this.createProjectReferences(projectId, existingEndpoint);
 
+        let credentialString: string;
+
         if (endpointConfiguration.credential.type === EndpointCredentialType.OIDC)
         {
             return this.createOidcEndpointObject(endpointConfiguration, projectReferences, existingEndpoint);
         }
 
-        const credential = await this._credential.getCredential(rotateCredential);
+        if (endpointConfiguration.credential.type === EndpointCredentialType.SpnKey)
+        {
+            const credential = this._credential as SpnKeyCredential;
 
-        return this.createSpnKeyEndpointObject(endpointConfiguration, credential, projectReferences, existingEndpoint);
+            const passwordCredential = await credential.createSpnCredential({
+                projectName: projectId,
+                servicePrincipalClientId: endpointConfiguration.identity.clientId
+            })
+
+            credentialString = passwordCredential.secretText;
+        }
+        else
+        {
+            credentialString = await this._credential.getCredential();
+        }
+
+        return this.createSpnKeyEndpointObject(endpointConfiguration, credentialString, projectReferences, existingEndpoint);
     }
 
     private createOidcEndpointObject(endpointConfiguration: IAzureEndpointConfiguration, projectReferences: IAzDevServiceEndpointProjectReferences[], existingEndpoint?: IAzDevServiceEndpoint): IAzDevServiceEndpoint

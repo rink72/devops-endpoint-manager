@@ -18,6 +18,17 @@ export interface IAzureFederatedCredential
     audiences: string[]
 }
 
+export interface IAzureApplicationPasswordCredential
+{
+    displayName: string
+    customKeyIdentifier: string
+    endDateTime: string
+    keyId: string
+    secretText: string
+    startDateTime: string
+    hint: string
+}
+
 export interface IAzureGraphRestResponse<T>
 {
     value: T[]

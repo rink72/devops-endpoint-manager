@@ -8,6 +8,7 @@ import { ICredentialFactory } from "./icredentialfactory";
 import { KeyVaultCredential } from "../keyvaultcredential";
 import { OidcCredential } from "../oidccredential";
 import { AzureClientFactory } from "../../clients/azureclient/factories/azureclientfactory";
+import { SpnKeyCredential } from "../spnkeycredential";
 
 export interface ICredentialFactoryProps
 {
@@ -56,8 +57,16 @@ export class CredentialFactory implements ICredentialFactory
                     })
                 }
 
-            default:
-                throw new Error(`Unknown credential type <${credential.type}>`);
+            case EndpointCredentialType.SpnKey:
+                {
+                    const azureClient = await AzureClientFactory.createClient({ logger: this._logger });
+
+                    return new SpnKeyCredential({
+                        logger: this._logger,
+                        azureClient: azureClient,
+                        credentialConfiguration: credential
+                    })
+                }
         }
     }
 }

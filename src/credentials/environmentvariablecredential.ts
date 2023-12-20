@@ -19,14 +19,9 @@ export class EnvironmentVariableCredential implements ICredential
         this._credentialConfiguration = props.credentialConfiguration
     }
 
-    public async getCredential(rotate: boolean): Promise<string>
+    public async getCredential(): Promise<string>
     {
         this._logger.debug(`Retrieving credential from <${this._credentialConfiguration.variableName}> environment variable`);
-
-        if (rotate)
-        {
-            this._logger.warn(`Rotation not supported for <${this._credentialConfiguration.variableName}> environment variable credential`);
-        }
 
         const secret = process.env[this._credentialConfiguration.variableName];
 

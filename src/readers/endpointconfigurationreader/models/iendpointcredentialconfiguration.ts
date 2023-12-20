@@ -3,18 +3,13 @@ export enum EndpointCredentialType
     "EnvironmentVariable" = "EnvironmentVariable",
     "OIDC" = "OIDC",
     "KeyVault" = "KeyVault",
-    "Key" = "Key"
+    "SpnKey" = "SpnKey"
 }
 
 export interface IEndpointEnvironmentVariableCredentialConfiguration
 {
     type: EndpointCredentialType.EnvironmentVariable
     variableName: string
-}
-
-export interface IEndpointOIDCCredentialConfiguration
-{
-    type: EndpointCredentialType.OIDC
 }
 
 export interface IEndpointKeyVaultCredentialConfiguration
@@ -24,10 +19,9 @@ export interface IEndpointKeyVaultCredentialConfiguration
     secretName: string
 }
 
-export interface IEndpointKeyCredentialConfiguration
+export interface IEndpointSpnKeyCredentialConfiguration
 {
-    type: EndpointCredentialType.Key
-    clientId: string
+    type: EndpointCredentialType.SpnKey
     daysValid: number
 }
 
@@ -37,7 +31,6 @@ export interface IEndpointOidcCredentialConfiguration
 }
 
 export type IEndpointCredentialConfiguration = IEndpointEnvironmentVariableCredentialConfiguration
-    | IEndpointOIDCCredentialConfiguration
     | IEndpointKeyVaultCredentialConfiguration
-    | IEndpointKeyCredentialConfiguration
+    | IEndpointSpnKeyCredentialConfiguration
     | IEndpointOidcCredentialConfiguration

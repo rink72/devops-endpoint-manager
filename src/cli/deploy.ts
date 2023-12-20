@@ -49,7 +49,7 @@ export const deploy = async (options: IRunOptions) =>
                 projectConfiguration: project
             })
 
-            await projectOrchestrator.run(false);
+            await projectOrchestrator.run();
         }
     }
     catch (error)

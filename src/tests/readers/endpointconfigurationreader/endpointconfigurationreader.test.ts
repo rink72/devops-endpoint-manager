@@ -2,8 +2,8 @@ import fs from 'fs/promises';
 
 import { EndpointConfigurationReader } from '../../../readers/endpointconfigurationreader/endpointconfigurationreader';
 import { IReaderProps } from '../../../readers/factories/readerfactory';
-import { appConfigMock, loggerMock } from '../../mocks';
-import { endpointsFileDataMock } from '../../data';
+import { appConfigMock, loggerMock } from '../../_mocks/mocks';
+import { endpointsFileDataMock } from '../../_mocks/data';
 
 jest.mock('fs/promises');
 

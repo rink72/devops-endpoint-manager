@@ -31,7 +31,7 @@ export class ProjectOrchestrator implements IProjectOrchestrator
         this._azDevClient = props.azDevClient;
     }
 
-    public async run(rotateCredentials: boolean): Promise<void>
+    public async run(): Promise<void>
     {
         this._logger.info(`Configuring service endpoints for <${this._projectConfiguration.name}> project`);
 
@@ -44,12 +44,12 @@ export class ProjectOrchestrator implements IProjectOrchestrator
 
         const targetStateEndpoints = this.getTargetStateEndpoints();
 
-        await this.createServiceEndpoints(rotateCredentials, projectDetails.id, targetStateEndpoints);
+        await this.createServiceEndpoints(projectDetails.id, targetStateEndpoints);
 
         await this.removeObsoleteEndpoints(targetStateEndpoints, projectDetails.id);
     }
 
-    private async createServiceEndpoints(rotateCredentials: boolean, projectId: string, targetStateEndpoints: IEndpointConfiguration[])
+    private async createServiceEndpoints(projectId: string, targetStateEndpoints: IEndpointConfiguration[])
     {
         this._logger.verbose(`Creating service endpoints for the <${this._projectConfiguration.name}> project`);
 
@@ -59,7 +59,7 @@ export class ProjectOrchestrator implements IProjectOrchestrator
 
             const endpoint = await this._endpointFactory.createEndpoint(endpointConfiguration);
 
-            await endpoint.createEndpoint(rotateCredentials, projectId);
+            await endpoint.createEndpoint(projectId);
         }
     }
 

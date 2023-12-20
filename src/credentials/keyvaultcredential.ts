@@ -23,14 +23,9 @@ export class KeyVaultCredential implements ICredential
         this._credentialConfiguration = props.credentialConfiguration
     }
 
-    public async getCredential(rotate: boolean): Promise<string>
+    public async getCredential(): Promise<string>
     {
         this._logger.debug(`Retrieving <${this._credentialConfiguration.secretName}> secret from <${this._credentialConfiguration.keyVault}> KeyVault`);
-
-        if (rotate)
-        {
-            this._logger.warn(`Rotation not supported for <${this._credentialConfiguration.secretName}> KeyVault credential`);
-        }
 
         const secret = await this._keyVaultClient.getSecret(this._credentialConfiguration.secretName);
 

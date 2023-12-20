@@ -32,11 +32,9 @@ export class OidcCredential implements ICredential
         this._credentialConfiguration = props.credentialConfiguration
     }
 
-    // @ts-expect-error noUnusedParameters
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public async getCredential(rotate: boolean): Promise<string>
+    public async getCredential(): Promise<string>
     {
-        this._logger.debug(`Method not implemented for credential type: ${this._credentialConfiguration.type}`)
+        this._logger.debug(`Method not implemented for <${this._credentialConfiguration.type}> credential type`)
 
         throw new Error("Method not implemented.")
     }
@@ -62,11 +60,11 @@ export class OidcCredential implements ICredential
 
         if (existingCredential)
         {
-            this._logger.debug(`Updating federated credential ${props.name} for ${props.servicePrincipalClientId} service principal`)
+            this._logger.debug(`Updating <${props.name}> federated credential for <${props.servicePrincipalClientId}> service principal`)
 
             if (!existingCredential.id)
             {
-                throw new Error(`Existing federated credential ${props.name} for ${props.servicePrincipalClientId} service principal does not have an id`)
+                throw new Error(`Existing <${props.name}> federated credential for <${props.servicePrincipalClientId}> service principal does not have an id`)
             }
 
             federatedCredential.id = existingCredential.id
@@ -74,7 +72,7 @@ export class OidcCredential implements ICredential
             return this._azureClient.updateFederatedCredential(servicePrincipal.id, federatedCredential);
         }
 
-        this._logger.debug(`Creating federated credential ${props.name} for ${servicePrincipal.id} service principal`)
+        this._logger.debug(`Creating <${props.name}> federated credential for <${servicePrincipal.id}> service principal`)
 
         return this._azureClient.createFederatedCredential(servicePrincipal.id, federatedCredential);
     }

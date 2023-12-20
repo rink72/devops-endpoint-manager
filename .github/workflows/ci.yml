@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install packages
         run: npm ci
@@ -25,3 +27,11 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: ${{ env.source_path }}
+
+      - name: SonarCloud Scan
+        if: always()
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ${{ env.source_path }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
