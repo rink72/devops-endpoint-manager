@@ -12,11 +12,6 @@ export interface IEndpointEnvironmentVariableCredentialConfiguration
     variableName: string
 }
 
-export interface IEndpointOIDCCredentialConfiguration
-{
-    type: EndpointCredentialType.OIDC
-}
-
 export interface IEndpointKeyVaultCredentialConfiguration
 {
     type: EndpointCredentialType.KeyVault
@@ -36,7 +31,6 @@ export interface IEndpointOidcCredentialConfiguration
 }
 
 export type IEndpointCredentialConfiguration = IEndpointEnvironmentVariableCredentialConfiguration
-    | IEndpointOIDCCredentialConfiguration
     | IEndpointKeyVaultCredentialConfiguration
     | IEndpointSpnKeyCredentialConfiguration
     | IEndpointOidcCredentialConfiguration
