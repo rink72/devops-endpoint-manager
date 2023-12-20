@@ -56,19 +56,6 @@ export class AzureClient implements IAzureClient
         return passwordCredential;
     }
 
-    public async getKeyVaultSecret(keyVaultName: string, secretName: string): Promise<string[]>
-    {
-        this._logger.debug(`Requesting secret <${secretName}> from <${keyVaultName}> KeyVault`);
-
-        const requestUrl = `/security/keyVaultSecrets/${keyVaultName}/${secretName}`;
-
-        const secret: IAzureGraphRestResponse<string> = await this._graphClient.api(requestUrl)
-            .version("beta")
-            .get()
-
-        return secret.value;
-    }
-
     public async getServicePrincipalByAppId(appId: string): Promise<IAzureServicePrincipal | null>
     {
         this._logger.debug(`Requesting service principal by app id: ${appId}`);

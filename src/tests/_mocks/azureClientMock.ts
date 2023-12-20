@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { IAzureClient } from "../../clients/azureclient/iazureclient";
 
 export const azureClientMock: jest.Mocked<IAzureClient> = new Proxy({}, {

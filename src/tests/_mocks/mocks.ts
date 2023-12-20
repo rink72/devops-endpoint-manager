@@ -89,12 +89,12 @@ export const WebApiMock = jest.fn().mockImplementation(() => ({
     }
 }));
 
-export const graphApiMock = jest.fn().mockImplementation(() => ({
-    version: jest.fn().mockReturnThis(),
-    get: jest.fn().mockReturnThis(),
-    update: jest.fn().mockReturnThis()
-}));
+// export const graphApiMock = jest.fn().mockImplementation(() => ({
+//     version: jest.fn().mockReturnThis(),
+//     get: jest.fn().mockReturnThis(),
+//     update: jest.fn().mockReturnThis()
+// }));
 
-export const graphClientMock = {
-    api: graphApiMock,
-};
+// export const graphClientMock = {
+//     api: graphApiMock,
+// };
