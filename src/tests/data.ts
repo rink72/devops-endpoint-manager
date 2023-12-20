@@ -24,8 +24,7 @@ endpoints:
     id: subscription-id
     name: subscription-name
   credential:
-    type: Key
-    clientId: my-key-client-id
+    type: SpnKey
     daysValid: 7
 
 - name: my-mock-shared-sve
