@@ -45,6 +45,11 @@ jobs:
         run: npm run build
         working-directory: ${{ env.source_path }}
 
+      - name: Copy readme
+        run: |
+          cp README.md ${{ env.source_path }}/README.md
+          cp docs ${{ env.source_path }}/docs -r
+
       - name: Publish prerelease
         if: github.event.inputs.version == 'prerelease'
         run: |
